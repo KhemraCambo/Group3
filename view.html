@@ -11,7 +11,7 @@
         }
         .dashboard-container {
             margin-top: 50px;
-            padding: 15px; /* Added padding */
+            padding: 15px; 
         }
         .btn-success {
             background-color: #28a745;
@@ -25,7 +25,7 @@
 <body>
     <div class="container-fluid dashboard-container">
         <h3 class="text-center">View all details </h3>
-        <a href="dashboard.html" class="btn btn-success mb-3">Add New Entry</a>
+       
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead class="thead-dark">
@@ -37,7 +37,7 @@
                     </tr>
                 </thead>
                 <tbody id="password-table-body">
-                    <!-- Password entries will be added here -->
+                  
                 </tbody>
             </table>
         </div>
@@ -56,7 +56,7 @@
                     <td>${password.username}</td>
                     <td>${password.password}</td>
                     <td>
-                        <a href="dashboard.html?index=${passwords.indexOf(password)}" class="btn btn-warning btn-sm">Edit</a>
+            
                         <button class="btn btn-danger btn-sm" onclick="deletePassword(${passwords.indexOf(password)})">Delete</button>
                     </td>
                 `;
@@ -71,5 +71,8 @@
             location.reload();
         }
     </script>
+    <div class="container-fluid dashboard-container">
+        <h3 class="text-center"> <a href="dashboard.html" class="btn btn-success mb-3">Back to Dashboard</a>
+    </h3>
 </body>
 </html>
