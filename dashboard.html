@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Manager Dashboard</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #e0f7fa, #c6f0f1);
+            color: #004d40;
+        }
+        .dashboard-container {
+            margin-top: 50px;
+            border: 1px solid #004d40;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+        .card-header {
+            background-color: #00796b;
+            color: #ffffff;
+            font-weight: bold;
+            text-align: center;
+        }
+        .btn-primary {
+            background-color: #00796b;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #004d40;
+        }
+        .btn-view {
+            background-color: #004d40;
+            color: #ffffff;
+            border: none;
+            margin-top: 20px;
+        }
+        .btn-view:hover {
+            background-color: #00796b;
+        }
+        table {
+            margin-top: 20px;
+        }
+        th, td {
+            text-align: center;
+        }
+        th {
+            background-color: #00796b;
+            color: #ffffff;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .form-control {
+            border-radius: 0;
+            border-color: #004d40;
+        }
+        .form-control:focus {
+            border-color: #00796b;
+            box-shadow: none;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 15px;
+            }
+            .btn-view {
+                width: 100%;
+            }
+            .card-body {
+                padding: 15px;
+            }
+            table {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid dashboard-container">
+        <h1 class="text-center">Password Manager Dashboard</h1>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-12 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        Add/Edit Password
+                    </div>
+                    <div class="card-body">
+                        <form id="password-form">
+                            <div class="form-group">
+                                <label for="website">Website</label>
+                                <input type="text" class="form-control" id="website" placeholder="Enter website name">
+                            </div>
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" id="username" placeholder="Enter username">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="text" class="form-control" id="password" placeholder="Enter password">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Save Password</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-6 col-12">
+                <h3 class="text-center">Saved Passwords</h3>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Website</th>
+                                <th>Username</th>
+                                <th>Password</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="password-list">
+                            <!-- Password entries will be added here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <form action="view.html">
+                <button class="btn btn-view">View Detail</button>
+            </form>
+        </div>
+    </div>
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordForm = document.getElementById('password-form');
+            const passwordList = document.getElementById('password-list');
+            let passwords = JSON.parse(localStorage.getItem('passwords')) || [];
+            let editingIndex = -1;
+
+            function renderPasswords() {
+                passwordList.innerHTML = '';
+                passwords.forEach((password, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${password.website}</td>
+                        <td>${password.username}</td>
+                        <td>${password.password}</td>
+                        <td>
+                            <button class="btn btn-warning btn-sm" onclick="editPassword(${index})">Edit</button>
+                            <button class="btn btn-danger btn-sm" onclick="deletePassword(${index})">Delete</button>
+                        </td>
+                    `;
+                    passwordList.appendChild(row);
+                });
+            }
+
+            window.editPassword = function(index) {
+                const password = passwords[index];
+                document.getElementById('website').value = password.website;
+                document.getElementById('username').value = password.username;
+                document.getElementById('password').value = password.password;
+                editingIndex = index;
+            }
+
+            window.deletePassword = function(index) {
+                passwords.splice(index, 1);
+                localStorage.setItem('passwords', JSON.stringify(passwords));
+                renderPasswords();
+            }
+
+            passwordForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const website = document.getElementById('website').value;
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+
+                if (editingIndex > -1) {
+                    passwords[editingIndex] = { website, username, password };
+                    editingIndex = -1;
+                } else {
+                    passwords.push({ website, username, password });
+                }
+
+                localStorage.setItem('passwords', JSON.stringify(passwords));
+                renderPasswords();
+                passwordForm.reset();
+            });
+
+            renderPasswords();
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
