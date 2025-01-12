@@ -5,16 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Password Manager</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         body {
-            background-image: url('https://codetheweb.blog/assets/img/posts/css-advanced-background-images/cover.jpg'); /* Replace with your background image URL */
+            background-image: url('https://codetheweb.blog/assets/img/posts/css-advanced-background-images/cover.jpg');
             background-size: cover;
             background-position: center;
+            padding: 30px;
             color: white;
             font-family: 'Arial', sans-serif;
         }
         .container {
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(175, 226, 232, 0.85);
             padding: 30px;
             border-radius: 15px;
             max-width: 100%;
@@ -62,9 +64,48 @@
     </style>
 </head>
 <body>
+   
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src ="Logo.png" alt="Logo" style="width:40px;" class="rounded-pill">
+            <tr>The University of Cambodia</tr>
+          </a>
+        </div>
+      </nav>
+      <div id="demo" class="carousel slide" data-bs-ride="carousel">
+
+        <!-- Indicators/dots -->
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+          <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+          <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+        </div>
+        <!-- The slideshow/carousel -->
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="Khemra.jpg" alt="Khemra" class="d-block" style="width:100%">
+          </div>
+          <div class="carousel-item">
+            <img src="Socheat.jpg" alt="Socheat" class="d-block" style="width:100%">
+          </div>
+          <div class="carousel-item">
+            <img src="Seth.jpg" alt="Seth" class="d-block" style="width:100%">
+          </div>
+        </div>
+        <!-- Left and right controls/icons -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
+    
+      
     <div class="container">
         <div id="login" class="text-center">
-            <h2>Login</h2>
+            <h2>Welcome to G3</h2>
             <div class="form-group">
                 <label for="username">Username:</label>
                 <input type="text" id="username" class="form-control">
@@ -78,16 +119,16 @@
 
         <div id="dashboard" class="hidden">
             <h2>Dashboard</h2>
-            <button id="addEntryBtn" class="btn btn-success btn-custom">Add New Entry</button>
+            <button id="addEntryBtn" class="btn btn-success btn-custom">Add More</button>
             <input type="text" id="filter" class="form-control mb-3" placeholder="Filter entries...">
             <div class="table-responsive">
                 <table class="table table-dark table-striped">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>No.</th>
                             <th>Username</th>
                             <th>Password</th>
-                            <th>Actions</th>
+                            <th>Botton Actions</th>
                         </tr>
                     </thead>
                     <tbody id="entryList"></tbody>
@@ -96,7 +137,7 @@
         </div>
 
         <div id="detailsView" class="hidden">
-            <h2>Details</h2>
+            <h2>Details view</h2>
             <div id="entryDetails"></div>
             <button id="backToDashboardBtn" class="btn btn-secondary btn-secondary-custom mt-3">Back to Dashboard</button>
         </div>
